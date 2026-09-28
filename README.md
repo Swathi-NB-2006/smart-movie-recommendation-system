@@ -1,204 +1,151 @@
-# Smart Movie Recommendation System
+🎬 Smart Movie Recommendation System Using Machine Learning
 
-A beginner-friendly movie discovery web app built with **Python** and **Streamlit**. It recommends movies using **TF-IDF** and **cosine similarity** on movie titles, genres and tags from the **MovieLens** dataset.
+A content-based movie recommendation system that helps users discover movies based on movie similarity, natural-language descriptions, moods, genres, and personalized selections.
 
-This is a **content-based** recommender. It is **not** ChatGPT, and it does **not** use paid APIs or deep learning.
+The project uses TF-IDF and cosine similarity for traditional content-based recommendations and includes a semantic recommendation engine using the MiniLM Sentence Transformer model to understand the meaning of a user's search query.
 
----
+✨ Features
 
-## Problem statement
+- 🎯 Recommend movies similar to a selected movie
+- 🧠 Semantic search using MiniLM embeddings
+- 🔍 Search for movies using natural-language descriptions
+- 😊 Mood-based movie recommendations
+- ⭐ Personalized recommendations based on selected movies
+- 🏆 Top-rated movie section
+- 🎭 Browse movies by genre
+- 🎞️ Watchlist support
+- 📊 Movie and rating statistics
+- 🌐 Interactive Streamlit web interface
+- 🧪 Semantic recommendation testing
 
-People often know they want “a funny adventure movie” or “something like Toy Story”, but browsing a large catalogue is slow. This project helps a user find similar or matching movies quickly, using machine learning on movie content instead of paid recommendation APIs.
+🧠 Machine Learning Approach
 
----
+1. Movie Dataset
 
-## Objectives
+The system works with movie information containing titles, genres, tags, and rating information.
 
-- Build a complete, runnable movie recommendation system for a college mini-project.
-- Use MovieLens data without asking the user to collect files by hand.
-- Recommend movies with TF-IDF and cosine similarity.
-- Support natural-language search, moods, personal favourites and a watchlist.
-- Explain each recommendation using genres and tags that actually exist in the data.
-- Keep the project simple enough for a beginner to run from VS Code or Cursor on Windows.
+2. Content Processing
 
----
+Movie information is combined into content text that can be processed by the recommendation system.
 
-## Features
+3. TF-IDF
 
-1. **Movie recommendation** – select a movie and get the top 10 similar titles.
-2. **NLP-based smart search** – type phrases such as `funny adventure movie`.
-3. **Mood-based recommendations** – Happy, Romantic, Thriller, Action, Relaxing, Funny, Intelligent.
-4. **Personalized recommendations** – combine up to 3 favourite movies.
-5. **Explainable recommendations** – every card includes “Why this movie?”.
-6. **Top rated movies** – ranked with a minimum rating-count threshold.
-7. **Genre explorer** – browse one genre, ordered by a reliable rating score.
-8. **Dashboard** – movie, rating and user counts in the sidebar.
-9. **Watchlist** – add, remove and clear movies during the current session.
+TF-IDF converts movie content into numerical feature vectors.
 
----
+4. Cosine Similarity
 
-## Technologies
+Cosine similarity measures how similar two movie-content vectors are.
+
+5. Semantic Recommendation
+
+The project also uses the "all-MiniLM-L6-v2" Sentence Transformer model.
+
+Instead of relying only on matching individual words, semantic embeddings represent the meaning of movie content and the user's query.
+
+6. Recommendation
+
+Movies are ranked according to their similarity to the selected movie or search description.
+
+🔄 Project Flow
+
+Movie Dataset
+↓
+Content / Features
+↓
+TF-IDF & Semantic Embeddings
+↓
+Similarity Calculation
+↓
+Movie Ranking
+↓
+Recommendations
+
+🛠️ Technologies Used
 
 - Python
-- Streamlit
 - Pandas
 - NumPy
 - Scikit-learn
+- Sentence Transformers
+- Streamlit
 - Plotly
 
-No API keys are required.
+📁 Project Structure
 
----
-
-## Dataset
-
-The project uses the **MovieLens Latest Small** dataset from GroupLens:
-
-- `movies.csv`
-- `ratings.csv`
-- `tags.csv`
-- `links.csv`
-
-If these files are missing, the app **downloads and extracts them automatically** into `data/ml-latest-small/`.
-
-MovieLens is a research dataset. Please credit GroupLens / MovieLens if you present this project.
-
----
-
-## How the recommendation algorithm works
-
-```text
-Movie data
-    → Content creation (title + genres + tags)
-    → TF-IDF vectorization
-    → Cosine similarity against the selected movie or search text
-    → Ranked recommendations
-```
-
-Ratings are **not** used inside TF-IDF. They are used only for:
-
-- average rating on cards
-- top-rated lists
-- genre explorer ordering
-
-The app does **not** build a full movie-to-movie similarity matrix. It calculates similarity only for the current query, which keeps memory use low.
-
----
-
-## TF-IDF explanation
-
-**TF-IDF** means Term Frequency–Inverse Document Frequency.
-
-- **Term frequency** asks: how often does a word appear in this movie’s content?
-- **Inverse document frequency** asks: is that word rare across all movies?
-
-Common words such as `the` become less important. Distinctive words such as `animation`, `cyberpunk` or a unique tag become more important. Each movie is turned into a numeric vector.
-
----
-
-## Cosine similarity explanation
-
-**Cosine similarity** measures the angle between two vectors.
-
-- `1.0` means the content is very similar
-- `0.0` means there is little overlap
-
-The app shows this as a **similarity percentage** on recommendation cards.
-
----
-
-## Project structure
-
-```text
-smartmovie/
-├── app.py                      # Streamlit user interface
-├── recommendation_engine.py    # TF-IDF, cosine similarity, explanations
-├── data_loader.py              # MovieLens download and preparation
+smart-movie-recommendation/
+│
+├── app.py
+├── data_loader.py
+├── recommendation_engine.py
+├── semantic_engine.py
+├── test_semantic.py
 ├── requirements.txt
 ├── README.md
-├── .streamlit/config.toml      # Dark charcoal + gold theme
-└── data/                       # Dataset is downloaded here automatically
-```
+└── .gitignore
 
----
+🚀 How to Run
 
-## Installation
+1. Clone the repository
 
-In VS Code or Cursor, open a terminal in this project folder.
+git clone <your-repository-url>
+cd smart-movie-recommendation
 
-### 1. Create a virtual environment (recommended on Windows)
+2. Install the required packages
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-```
-
-If Windows blocks the activate script, run:
-
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\.venv\Scripts\Activate.ps1
-```
-
-### 2. Install packages
-
-```powershell
 pip install -r requirements.txt
-```
 
----
+3. Start the Streamlit application
 
-## How to run
+python -m streamlit run app.py
 
-```powershell
-streamlit run app.py
-```
+4. Open the application
 
-The first start may take a little longer because the MovieLens zip file is downloaded and the TF-IDF model is built. Later starts are faster because Streamlit caches that work.
+Streamlit will provide a local URL, usually:
 
-Then open the local URL shown in the terminal, usually:
-
-```text
 http://localhost:8501
-```
+
+Open it in your browser.
+
+🔎 Example Semantic Search
+
+Users can enter natural-language queries such as:
+
+a funny adventure movie
+
+or
+
+a romantic emotional love story
+
+The semantic engine converts the query into an embedding and compares it with movie embeddings to find relevant recommendations.
+
+🧪 Testing
+
+The project includes:
+
+test_semantic.py
+
+for testing the semantic recommendation functionality.
+
+🎓 Project Information
+
+Project: Smart Movie Recommendation System Using Machine Learning
+Branch: Electronics and Communication Engineering (ECE)
+Academic Year: 2026–27
+
+📌 Future Improvements
+
+- Movie poster and trailer integration
+- User login and persistent profiles
+- Improved recommendation using user feedback
+- Larger movie datasets
+- Deployment as a public web application
+- Further optimization for edge/AI hardware platforms
+
+👩‍💻 Author
+
+Swathi N.B
+ECE 3rd Year Engineering Student
 
 ---
 
-## Example queries
-
-Try these in **Discover → What kind of movie are you looking for?**
-
-- `funny adventure movie`
-- `romantic emotional movie`
-- `intelligent thriller`
-- `action science fiction`
-- `relaxing comedy`
-
-Also try recommending movies similar to:
-
-- `Toy Story (1995)`
-- `The Matrix (1999)`
-- `Forrest Gump (1994)`
-
----
-
-## Future enhancements
-
-- Collaborative filtering using user-user or item-item ratings
-- A saved watchlist (file or database) instead of session-only storage
-- Poster images if a free image source is added
-- Better handling of sequels and remakes
-- User accounts and rating history
-
----
-
-## Academic note
-
-This project is suitable for a college mini-project demonstration. It clearly shows:
-
-- data loading
-- text preprocessing
-- TF-IDF
-- cosine similarity
-- a usable interface
-- honest explanations that stay within the dataset
+⭐ If you find this project interesting, feel free to explore the code and recommendation engine.
