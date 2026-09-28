@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+data/*.zip
+data/ml-latest-small/
+.streamlit/secrets.toml
